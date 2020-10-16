@@ -1,0 +1,16 @@
+#/bin/env bash
+if [ $1 = dependsrun1 ]; then
+ deps=$(dpkg -I $2 | grep ' Depends: ' | cut -c 11-)
+ for i in $(echo $deps | tr " , " "\n")
+ do
+   # process
+  result=`echo $i | sed 's/[^a-zA-Z]*//g'`;
+  echo $result
+ done
+fi
+if [ $1 = depends ]; then
+ bash debsync dependsrun1 $2 | tr ' ' '\n' | sort | uniq
+fi
+
+
+
